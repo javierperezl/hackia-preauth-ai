@@ -52,7 +52,7 @@ export default function Home() {
       formData.append("medical_text", medicalText);
       formData.append("policy_text", policyText);
 
-      const res = await fetch("http://localhost:8000/analyze", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/analyze`, {
         method: "POST",
         body: formData
       });
@@ -68,7 +68,19 @@ export default function Home() {
       // simulamos pequeño delay para UX tipo "system processing"
       setTimeout(() => {
         setResult(parsed);
-        setLoading(false);
+
+        // animación fake AI reasoning
+        parsed.reasoning.forEach((item: string, index: number) => {
+          setTimeout(() => {
+            setTypedReasoning((prev) => [...prev, item]);
+            setStep(index + 1);
+          }, index * 800);
+        });
+
+        setTimeout(() => {
+          setLoading(false);
+        }, parsed.reasoning.length * 800 + 500);
+
       }, 600);
 
     } catch (error) {
