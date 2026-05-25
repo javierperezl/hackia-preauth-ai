@@ -22,3 +22,4 @@ typing_extensions==4.15.0
 uvicorn==0.47.0
 PyMuPDF
 notion-client
+python-multipart
