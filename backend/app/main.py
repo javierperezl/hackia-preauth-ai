@@ -7,6 +7,8 @@ import fitz
 import os
 import json
 from notion_client import Client
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 
 notion = Client(
@@ -20,6 +22,12 @@ client = OpenAI(
 )
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+@app.get("/")
+async def serve_frontend():
+    return FileResponse("static/index.html")
+
 
 app.add_middleware(
     CORSMiddleware,
