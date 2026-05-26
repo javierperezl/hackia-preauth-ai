@@ -328,8 +328,14 @@ export default function Home() {
               {/* STATUS */}
               <div className="flex items-center gap-4">
 
-                <Badge className="bg-green-600 text-white px-5 py-2 text-sm">
-                  APPROVED
+                <Badge
+                  className={`px-5 py-2 text-sm text-white ${
+                    (result.decision || "").toUpperCase() === "APPROVED"
+                      ? "bg-green-600"
+                      : "bg-red-600"
+                  }`}
+                >
+                  {(result.decision || "UNKNOWN").toUpperCase()}
                 </Badge>
 
                 <div className="text-lg text-gray-600">
